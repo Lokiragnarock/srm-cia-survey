@@ -1,0 +1,13 @@
+q_id,section,type,question_text,options,image_url,branch_logic
+q_role,Screener,radio,What is your role?,Manager | Team Lead | Individual Contributor,,default: q_tenure
+q_tenure,Screener,radio,How long have you worked here?,Less than 1 year | 1-3 years | 3+ years,,default: q_checkpoint1
+q_checkpoint1,Screener,radio,Are you in a technical role?,Yes | No,,Yes: q_tech_path1 | No: q_non_tech_path1
+q_tech_path1,Tech_Path,radio,What is your primary tech stack?,Frontend | Backend | Full-Stack,,default: q_tech_path2
+q_tech_path2,Tech_Path,image,How do you feel about this AI coding trend?,Excited | Neutral | Concerned,https://via.placeholder.com/600x300/667eea/ffffff?text=AI+Coding+Tools+Growth+2024,default: q_checkpoint2
+q_non_tech_path1,NonTech_Path,radio,Which department are you in?,Sales | Marketing | Operations,,default: q_non_tech_path2
+q_non_tech_path2,NonTech_Path,radio,Do you work directly with clients?,Yes | No,,default: q_checkpoint2
+q_checkpoint2,MidPoint,radio,What is your work arrangement?,Fully Remote | Hybrid | Office,,Fully Remote: q_remote1 | Hybrid: q_hybrid1 | Office: q_office1
+q_remote1,Remote_Path,radio,What's your biggest remote work challenge?,Communication | Isolation | Productivity,,default: q_final
+q_hybrid1,Hybrid_Path,radio,How many days per week do you work in the office?,1-2 days | 3-4 days | 5 days,,default: q_final
+q_office1,Office_Path,radio,Do you prefer your current office setup?,Yes | No | Unsure,,default: q_final
+q_final,Closing,radio,Would you recommend this company to a friend?,Definitely | Maybe | No,,submit

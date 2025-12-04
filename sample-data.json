@@ -1,0 +1,110 @@
+[
+  {
+    "q_id": "q_role",
+    "section": "Screener",
+    "type": "radio",
+    "question_text": "What is your role?",
+    "options": "Manager | Team Lead | Individual Contributor",
+    "image_url": "",
+    "branch_logic": "default: q_tenure"
+  },
+  {
+    "q_id": "q_tenure",
+    "section": "Screener",
+    "type": "radio",
+    "question_text": "How long have you worked here?",
+    "options": "Less than 1 year | 1-3 years | 3+ years",
+    "image_url": "",
+    "branch_logic": "default: q_checkpoint1"
+  },
+  {
+    "q_id": "q_checkpoint1",
+    "section": "Screener",
+    "type": "radio",
+    "question_text": "Are you in a technical role?",
+    "options": "Yes | No",
+    "image_url": "",
+    "branch_logic": "Yes: q_tech_path1 | No: q_non_tech_path1"
+  },
+  {
+    "q_id": "q_tech_path1",
+    "section": "Tech_Path",
+    "type": "radio",
+    "question_text": "What is your primary tech stack?",
+    "options": "Frontend | Backend | Full-Stack",
+    "image_url": "",
+    "branch_logic": "default: q_tech_path2"
+  },
+  {
+    "q_id": "q_tech_path2",
+    "section": "Tech_Path",
+    "type": "image",
+    "question_text": "How do you feel about this AI coding trend?",
+    "options": "Excited | Neutral | Concerned",
+    "image_url": "https://via.placeholder.com/600x300/667eea/ffffff?text=AI+Coding+Tools+Growth+2024",
+    "branch_logic": "default: q_checkpoint2"
+  },
+  {
+    "q_id": "q_non_tech_path1",
+    "section": "NonTech_Path",
+    "type": "radio",
+    "question_text": "Which department are you in?",
+    "options": "Sales | Marketing | Operations",
+    "image_url": "",
+    "branch_logic": "default: q_non_tech_path2"
+  },
+  {
+    "q_id": "q_non_tech_path2",
+    "section": "NonTech_Path",
+    "type": "radio",
+    "question_text": "Do you work directly with clients?",
+    "options": "Yes | No",
+    "image_url": "",
+    "branch_logic": "default: q_checkpoint2"
+  },
+  {
+    "q_id": "q_checkpoint2",
+    "section": "MidPoint",
+    "type": "radio",
+    "question_text": "What is your work arrangement?",
+    "options": "Fully Remote | Hybrid | Office",
+    "image_url": "",
+    "branch_logic": "Fully Remote: q_remote1 | Hybrid: q_hybrid1 | Office: q_office1"
+  },
+  {
+    "q_id": "q_remote1",
+    "section": "Remote_Path",
+    "type": "radio",
+    "question_text": "What's your biggest remote work challenge?",
+    "options": "Communication | Isolation | Productivity",
+    "image_url": "",
+    "branch_logic": "default: q_final"
+  },
+  {
+    "q_id": "q_hybrid1",
+    "section": "Hybrid_Path",
+    "type": "radio",
+    "question_text": "How many days per week do you work in the office?",
+    "options": "1-2 days | 3-4 days | 5 days",
+    "image_url": "",
+    "branch_logic": "default: q_final"
+  },
+  {
+    "q_id": "q_office1",
+    "section": "Office_Path",
+    "type": "radio",
+    "question_text": "Do you prefer your current office setup?",
+    "options": "Yes | No | Unsure",
+    "image_url": "",
+    "branch_logic": "default: q_final"
+  },
+  {
+    "q_id": "q_final",
+    "section": "Closing",
+    "type": "radio",
+    "question_text": "Would you recommend this company to a friend?",
+    "options": "Definitely | Maybe | No",
+    "image_url": "",
+    "branch_logic": "submit"
+  }
+]

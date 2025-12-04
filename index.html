@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Survey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- Question Container -->
+        <div class="question-wrapper" id="questionWrapper">
+            <div class="question-container" id="questionContainer">
+                <div class="question-number" id="questionNumber"></div>
+                <h1 class="question-text" id="questionText"></h1>
+                
+                <!-- Image (if applicable) -->
+                <div class="question-image-container" id="imageContainer" style="display: none;">
+                    <img id="questionImage" alt="Question visual">
+                </div>
+                
+                <!-- Options -->
+                <div class="options-container" id="optionsContainer"></div>
+                
+                <!-- Navigation Buttons -->
+                <div class="nav-buttons">
+                    <button class="btn btn-back" id="backBtn" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Back
+                    </button>
+                    <button class="btn btn-next" id="nextBtn" disabled>
+                        Next
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thank You Screen -->
+        <div class="thank-you-screen" id="thankYouScreen" style="display: none;">
+            <div class="thank-you-content">
+                <div class="checkmark-circle">
+                    <svg class="checkmark" viewBox="0 0 52 52">
+                        <circle class="checkmark-circle-path" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                </div>
+                <h1>Thank you!</h1>
+                <p>Your response has been recorded successfully.</p>
+            </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div class="loading-screen" id="loadingScreen">
+            <div class="spinner"></div>
+            <p>Loading survey...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
