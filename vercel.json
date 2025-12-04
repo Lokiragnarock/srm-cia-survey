@@ -1,24 +1,4 @@
 {
-    "version": 2,
-    "name": "srm-cia-survey",
-    "builds": [
-        {
-            "src": "*.html",
-            "use": "@vercel/static"
-        },
-        {
-            "src": "*.css",
-            "use": "@vercel/static"
-        },
-        {
-            "src": "*.js",
-            "use": "@vercel/static"
-        },
-        {
-            "src": "*.json",
-            "use": "@vercel/static"
-        }
-    ],
     "headers": [
         {
             "source": "/(.*)",
