@@ -344,13 +344,16 @@ async function submitSurvey() {
         } else {
             // Submit to Google Apps Script
             // Use text/plain to avoid CORS preflight (OPTIONS) request
-            await fetch(CONFIG.APPS_SCRIPT_URL, {
+            const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/plain;charset=utf-8',
                 },
                 body: JSON.stringify(submissionData)
             });
+
+            const result = await response.json();
+            console.log('Server response:', result);
         }
 
         // Clear saved progress on successful submission
