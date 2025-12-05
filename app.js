@@ -1,10 +1,10 @@
 // ==================== CONFIGURATION ====================
 const CONFIG = {
     // Google Apps Script Web App URL (to be set after deployment)
-    APPS_SCRIPT_URL: '', // USER WILL UPDATE THIS AFTER DEPLOYING APPS SCRIPT
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw_tKMZHnaIgV4Jhrc76fQRRDeS-le3n7DLKCmPKF3GPyZgIeh3nuDt0zL3-hUrw2uB/exec',
     
     // For testing, we can use sample data from a local JSON file
-    USE_SAMPLE_DATA: true,
+    USE_SAMPLE_DATA: false,
     SAMPLE_DATA_FILE: 'sample-data.json'
 };
 
