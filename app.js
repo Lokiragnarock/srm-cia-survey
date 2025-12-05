@@ -286,10 +286,11 @@ async function submitSurvey() {
             await new Promise(resolve => setTimeout(resolve, 1000));
         } else {
             // Submit to Google Apps Script
+            // Use text/plain to avoid CORS preflight (OPTIONS) request
             await fetch(CONFIG.APPS_SCRIPT_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'text/plain;charset=utf-8',
                 },
                 body: JSON.stringify(submissionData)
             });
