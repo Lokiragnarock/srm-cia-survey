@@ -34,6 +34,47 @@ const elements = {
     nextBtn: document.getElementById('nextBtn')
 };
 
+// ==================== AUTO-SAVE SYSTEM ====================
+const STORAGE_KEY = 'srm_cia_survey_progress';
+
+function saveProgress() {
+    const progress = {
+        currentQuestionId: state.currentQuestionId,
+        currentQuestionIndex: state.currentQuestionIndex,
+        responses: state.responses,
+        history: state.history,
+        pathTaken: state.pathTaken,
+        timestamp: new Date().getTime()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+}
+
+function loadProgress() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+        try {
+            const progress = JSON.parse(saved);
+            // Only restore if valid
+            if (progress.currentQuestionId && progress.responses) {
+                state.currentQuestionId = progress.currentQuestionId;
+                state.currentQuestionIndex = progress.currentQuestionIndex;
+                state.responses = progress.responses;
+                state.history = progress.history || [];
+                state.pathTaken = progress.pathTaken || [];
+                return true;
+            }
+        } catch (e) {
+            console.error('Failed to load progress', e);
+            localStorage.removeItem(STORAGE_KEY);
+        }
+    }
+    return false;
+}
+
+function clearProgress() {
+    localStorage.removeItem(STORAGE_KEY);
+}
+
 // ==================== INITIALIZATION ====================
 async function init() {
     try {
@@ -42,11 +83,19 @@ async function init() {
         // Load survey configuration
         await loadSurveyConfig();
 
-        // Start survey from first question
+        // Try to restore progress
+        const restored = loadProgress();
+
         if (state.surveyConfig.length > 0) {
-            state.currentQuestionId = state.surveyConfig[0].q_id;
             state.totalQuestions = estimateTotalQuestions();
-            showQuestion(state.currentQuestionId);
+
+            if (restored) {
+                console.log('Restored previous session');
+                showQuestion(state.currentQuestionId);
+            } else {
+                state.currentQuestionId = state.surveyConfig[0].q_id;
+                showQuestion(state.currentQuestionId);
+            }
         } else {
             throw new Error('No survey questions found');
         }
@@ -104,13 +153,15 @@ function showQuestion(questionId) {
 
     // Update state
     state.currentQuestionId = questionId;
-    state.currentQuestionIndex++;
+
+    // Save progress whenever a new question is shown
+    saveProgress();
 
     // Update progress bar
     updateProgress();
 
     // Update question number
-    elements.questionNumber.textContent = `Question ${state.currentQuestionIndex}`;
+    elements.questionNumber.textContent = `Question ${state.currentQuestionIndex + 1}`; // Display 1-based index
 
     // Update question text
     elements.questionText.innerHTML = question.question_text;
@@ -170,6 +221,9 @@ function selectOption(questionId, answer, button) {
     // Save response
     state.responses[questionId] = answer;
 
+    // Save progress immediately after selection
+    saveProgress();
+
     // Enable next button
     elements.nextBtn.disabled = false;
 
@@ -195,6 +249,9 @@ function goToNextQuestion() {
     // Add current question to history
     state.history.push(state.currentQuestionId);
     state.pathTaken.push(`${state.currentQuestionId}: ${recordedAnswer}`);
+
+    // Increment index for next question
+    state.currentQuestionIndex++;
 
     // Get next question ID using branch logic
     const nextQuestionId = getNextQuestion(currentQuestion, recordedAnswer);
@@ -295,6 +352,9 @@ async function submitSurvey() {
                 body: JSON.stringify(submissionData)
             });
         }
+
+        // Clear saved progress on successful submission
+        clearProgress();
 
         // Show thank you screen
         elements.loadingScreen.style.display = 'none';
