@@ -184,17 +184,20 @@ function goToNextQuestion() {
     const currentQuestion = state.surveyConfig.find(q => q.q_id === state.currentQuestionId);
     const userAnswer = state.responses[state.currentQuestionId];
 
-    if (!userAnswer) {
+    if (!userAnswer && currentQuestion.type !== 'image') {
         alert('Please select an option');
         return;
     }
 
+    // For image slides, record a default 'VIEWED' action if no response exists
+    const recordedAnswer = userAnswer || 'VIEWED';
+
     // Add current question to history
     state.history.push(state.currentQuestionId);
-    state.pathTaken.push(`${state.currentQuestionId}: ${userAnswer}`);
+    state.pathTaken.push(`${state.currentQuestionId}: ${recordedAnswer}`);
 
     // Get next question ID using branch logic
-    const nextQuestionId = getNextQuestion(currentQuestion, userAnswer);
+    const nextQuestionId = getNextQuestion(currentQuestion, recordedAnswer);
 
     if (nextQuestionId === 'submit') {
         submitSurvey();
@@ -341,8 +344,12 @@ function updateNavigationButtons() {
         }
     }
 
-    // Disable next button initially
-    elements.nextBtn.disabled = !state.responses[state.currentQuestionId];
+    // Disable next button initially, unless it's an informational image slide
+    if (currentQuestion && currentQuestion.type === 'image') {
+        elements.nextBtn.disabled = false;
+    } else {
+        elements.nextBtn.disabled = !state.responses[state.currentQuestionId];
+    }
 }
 
 function animateQuestion() {
