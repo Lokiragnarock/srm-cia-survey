@@ -1,8 +1,8 @@
 // ==================== CONFIGURATION ====================
 const CONFIG = {
     // Google Apps Script Web App URL (to be set after deployment)
-    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw_tKMZHnaIgV4Jhrc76fQRRDeS-le3n7DLKCmPKF3GPyZgIeh3nuDt0zL3-hUrw2uB/exec',
-    
+    APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwF7uhM8DcqfWJZkaXsPPBqYRs1orUmwfB3YNN-2E11k6MI4hFR1MF8q7gAEuTItYTL/exec',
+
     // For testing, we can use sample data from a local JSON file
     USE_SAMPLE_DATA: false,
     SAMPLE_DATA_FILE: 'sample-data.json'
@@ -38,10 +38,10 @@ const elements = {
 async function init() {
     try {
         elements.loadingScreen.style.display = 'flex';
-        
+
         // Load survey configuration
         await loadSurveyConfig();
-        
+
         // Start survey from first question
         if (state.surveyConfig.length > 0) {
             state.currentQuestionId = state.surveyConfig[0].q_id;
@@ -50,7 +50,7 @@ async function init() {
         } else {
             throw new Error('No survey questions found');
         }
-        
+
         elements.loadingScreen.style.display = 'none';
     } catch (error) {
         console.error('Initialization error:', error);
@@ -87,7 +87,7 @@ function parseSheetData(rawData) {
 // ==================== QUESTION DISPLAY ====================
 function showQuestion(questionId) {
     const question = state.surveyConfig.find(q => q.q_id === questionId);
-    
+
     if (!question) {
         console.error('Question not found:', questionId);
         return;
@@ -126,24 +126,24 @@ function showQuestion(questionId) {
 
 function renderOptions(question) {
     elements.optionsContainer.innerHTML = '';
-    
+
     if (question.type === 'radio' && question.options) {
         const options = question.options.split('|').map(opt => opt.trim());
-        
+
         options.forEach((option, index) => {
             const button = document.createElement('button');
             button.className = 'option-btn';
             button.textContent = option;
             button.style.setProperty('--index', index);
-            
+
             // Check if this option was previously selected
             if (state.responses[question.q_id] === option) {
                 button.classList.add('selected');
                 elements.nextBtn.disabled = false;
             }
-            
+
             button.addEventListener('click', () => selectOption(question.q_id, option, button));
-            
+
             elements.optionsContainer.appendChild(button);
         });
     }
@@ -154,16 +154,16 @@ function selectOption(questionId, answer, button) {
     document.querySelectorAll('.option-btn').forEach(btn => {
         btn.classList.remove('selected');
     });
-    
+
     // Add 'selected' class to clicked option
     button.classList.add('selected');
-    
+
     // Save response
     state.responses[questionId] = answer;
-    
+
     // Enable next button
     elements.nextBtn.disabled = false;
-    
+
     // Add subtle haptic feedback (if on mobile)
     if (window.navigator.vibrate) {
         window.navigator.vibrate(10);
@@ -174,7 +174,7 @@ function selectOption(questionId, answer, button) {
 function goToNextQuestion() {
     const currentQuestion = state.surveyConfig.find(q => q.q_id === state.currentQuestionId);
     const userAnswer = state.responses[state.currentQuestionId];
-    
+
     if (!userAnswer) {
         alert('Please select an option');
         return;
@@ -200,7 +200,7 @@ function goToPreviousQuestion() {
     // Remove last entry from history
     const previousQuestionId = state.history.pop();
     state.pathTaken.pop();
-    
+
     // Decrement question index
     state.currentQuestionIndex--;
 
@@ -215,7 +215,7 @@ function goToPreviousQuestion() {
  */
 function getNextQuestion(currentQuestion, userAnswer) {
     const logic = currentQuestion.branch_logic;
-    
+
     if (!logic || logic === 'null' || !logic.trim()) {
         return 'submit';
     }
@@ -234,12 +234,12 @@ function getNextQuestion(currentQuestion, userAnswer) {
     // CASE 3: Conditional Branching (Text Matching)
     // Example: "Manager: q_path_a | Team Lead: q_path_b | IC: q_path_c"
     const rules = logic.split('|');
-    
+
     for (const rule of rules) {
         if (!rule.includes(':')) continue;
-        
+
         const [trigger, target] = rule.split(':').map(s => s.trim());
-        
+
         // Use 'includes' for flexible matching (handles whitespace issues)
         if (userAnswer.includes(trigger) || trigger.includes(userAnswer)) {
             return target;
@@ -259,7 +259,7 @@ function getNextQuestion(currentQuestion, userAnswer) {
 async function submitSurvey() {
     try {
         elements.loadingScreen.style.display = 'flex';
-        
+
         const submissionData = {
             timestamp: new Date().toISOString(),
             responses: state.responses,
@@ -269,7 +269,7 @@ async function submitSurvey() {
         if (CONFIG.USE_SAMPLE_DATA) {
             // In demo mode, just log to console
             console.log('Survey Response:', submissionData);
-            
+
             // Simulate API delay
             await new Promise(resolve => setTimeout(resolve, 1000));
         } else {
@@ -312,7 +312,7 @@ function updateNavigationButtons() {
     // Update next button text
     const currentQuestion = state.surveyConfig.find(q => q.q_id === state.currentQuestionId);
     const userAnswer = state.responses[state.currentQuestionId];
-    
+
     if (userAnswer && currentQuestion) {
         const nextId = getNextQuestion(currentQuestion, userAnswer);
         if (nextId === 'submit') {

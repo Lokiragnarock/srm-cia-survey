@@ -2,8 +2,8 @@
 // This script provides API endpoints for the survey form
 // Deploy this as a Web App from Google Apps Script editor
 
-// CONFIGURATION - Update this with your Sheet ID
-const SHEET_ID = '14m2BaVFEv1YWewCtwoTNZZaWE6uva-EBSTPiWzb6D5A';
+// CONFIGURATION
+// No hardcoded ID needed - automatically uses the sheet this script is attached to
 const CONFIG_TAB = 'survey_config';
 const RESPONSES_TAB = 'responses';
 
@@ -46,7 +46,7 @@ function doPost(e) {
  * Reads the survey_config tab and returns as JSON array
  */
 function getSurveyConfig() {
-    const sheet = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = SpreadsheetApp.getActiveSpreadsheet();
     const configTab = sheet.getSheetByName(CONFIG_TAB);
 
     if (!configTab) {
@@ -81,7 +81,7 @@ function getSurveyConfig() {
  * @param {Object} data - Response data with timestamp, responses, and pathTaken
  */
 function saveResponse(data) {
-    const sheet = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = SpreadsheetApp.getActiveSpreadsheet();
     let responsesTab = sheet.getSheetByName(RESPONSES_TAB);
 
     // Create responses tab if it doesn't exist
@@ -120,7 +120,7 @@ function saveResponse(data) {
  * @param {Sheet} responsesTab - The responses sheet object
  */
 function initializeResponsesTab(responsesTab) {
-    const sheet = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = SpreadsheetApp.getActiveSpreadsheet();
     const configTab = sheet.getSheetByName(CONFIG_TAB);
 
     if (!configTab) {
@@ -175,7 +175,7 @@ function createJsonResponse(data, statusCode = 200) {
  * This is optional - you can also set up manually
  */
 function setupSheets() {
-    const sheet = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = SpreadsheetApp.getActiveSpreadsheet();
 
     // Create survey_config tab if it doesn't exist
     let configTab = sheet.getSheetByName(CONFIG_TAB);
