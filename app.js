@@ -113,7 +113,7 @@ function showQuestion(questionId) {
     elements.questionNumber.textContent = `Question ${state.currentQuestionIndex}`;
 
     // Update question text
-    elements.questionText.textContent = question.question_text;
+    elements.questionText.innerHTML = question.question_text;
 
     // Handle image if present
     if (question.image_url && question.image_url !== 'null' && question.image_url.trim()) {
