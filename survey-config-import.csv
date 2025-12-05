@@ -1,13 +1,18 @@
-q_id,section,type,question_text,options,image_url,branch_logic
-q_role,Screener,radio,What is your role?,Manager | Team Lead | Individual Contributor,,default: q_tenure
-q_tenure,Screener,radio,How long have you worked here?,Less than 1 year | 1-3 years | 3+ years,,default: q_checkpoint1
-q_checkpoint1,Screener,radio,Are you in a technical role?,Yes | No,,Yes: q_tech_path1 | No: q_non_tech_path1
-q_tech_path1,Tech_Path,radio,What is your primary tech stack?,Frontend | Backend | Full-Stack,,default: q_tech_path2
-q_tech_path2,Tech_Path,image,How do you feel about this AI coding trend?,Excited | Neutral | Concerned,https://via.placeholder.com/600x300/667eea/ffffff?text=AI+Coding+Tools+Growth+2024,default: q_checkpoint2
-q_non_tech_path1,NonTech_Path,radio,Which department are you in?,Sales | Marketing | Operations,,default: q_non_tech_path2
-q_non_tech_path2,NonTech_Path,radio,Do you work directly with clients?,Yes | No,,default: q_checkpoint2
-q_checkpoint2,MidPoint,radio,What is your work arrangement?,Fully Remote | Hybrid | Office,,Fully Remote: q_remote1 | Hybrid: q_hybrid1 | Office: q_office1
-q_remote1,Remote_Path,radio,What's your biggest remote work challenge?,Communication | Isolation | Productivity,,default: q_final
-q_hybrid1,Hybrid_Path,radio,How many days per week do you work in the office?,1-2 days | 3-4 days | 5 days,,default: q_final
-q_office1,Office_Path,radio,Do you prefer your current office setup?,Yes | No | Unsure,,default: q_final
-q_final,Closing,radio,Would you recommend this company to a friend?,Definitely | Maybe | No,,submit
+q_id,type,question_text,options,image_url,branch_logic
+q_vintage,radio,In which year did you open your FIRST investment account?,"2020 – Present (Post-COVID) | 2016 – 2019 (Jio Era) | 2009 – 2015 (Recovery Era) | Pre-2008 (Cycle Veteran)",,"2020 – Present (Post-COVID): q_novice_source | 2016 – 2019 (Jio Era): q_novice_source | 2009 – 2015 (Recovery Era): q_veteran_action | Pre-2008 (Cycle Veteran): q_veteran_action"
+q_novice_source,radio,What is your primary source for discovering new stock ideas?,"Social Media (YouTube, Instagram, Telegram) | Friends & Family | Screening Apps (Tickertape/Screener)",,default: q_novice_interface
+q_novice_interface,radio,Which interface do you use for >80% of your trades?,"Mobile Trading App (Zerodha, Groww, etc.) | Desktop Web Terminal",,default: q_truth_serum
+q_veteran_action,radio,"Think back to the 2008 or 2020 crash. What was your primary action?","I exited/reduced positions | I held or averaged down | I was inactive",,default: q_veteran_product
+q_veteran_product,radio,Do you currently invest primarily via Direct Stocks or Mutual Funds?,"Mostly Direct Equity | Mostly Mutual Funds | 50-50 Mix",,default: q_truth_serum
+q_truth_serum,radio,"Think back to June 4th, 2024 (Election Results Day). What did you ACTUALLY do?","Sold positions to protect capital | Did nothing (Held) | Deployed more capital (Bought)",,default: q_randomizer
+q_randomizer,randomizer,[System Logic: Split Users],,,random: q_vignette_fear | q_vignette_greed
+q_vignette_fear,image,"SCENARIO A: Please review the market news below. <br> Headline: GLOBAL WAR RISK: SENSEX TANKS 2,000 PTS.",,https://imgur.com/fear_chart.png,default: q_reaction_sip
+q_vignette_greed,image,"SCENARIO B: Please review the market news below. <br> Headline: INDIA SHINING: NIFTY HITS NEW HIGH.",,https://imgur.com/greed_chart.png,default: q_reaction_sip
+q_reaction_sip,radio,Imagine the headline above happens tomorrow. How would you manage your SIPs?,"Tactical Pause (Stop temporarily) | Status Quo (Continue) | Aggressive Top-Up (Increase amount)",,default: q_reaction_cash
+q_reaction_cash,radio,You have ₹1,00,000 in liquid cash. How much do you deploy immediately?,"₹0 (Wait & Watch) | ₹25,000 (Cautious Entry) | ₹50,000+ (Aggressive Entry) | I would SELL existing stocks",,default: q_latency
+q_latency,radio,In this scenario, how often would you check your portfolio value?,"Multiple times a day / On Notification | Once at market close | Once a week or less",,default: q_expectations
+q_expectations,radio,Where do you expect the NIFTY to be 1 year after this headline?,"Lower than today | Approximately the same | Higher (New Highs)",,default: q_control_pnl
+q_control_pnl,radio,What is the current P&L status of your portfolio?,"Significant Profit (>15%) | Marginal Profit / Break-even | Loss (Red)",,default: q_control_attitude
+q_control_attitude,radio,"Which statement describes your view on ""Market Volatility""?","A threat to savings | Noise to be ignored | An opportunity to trade",,default: q_demographics_age
+q_demographics_age,radio,What is your Age Group?,"18 – 25 | 26 – 35 | 36 – 50 | 50+",,default: q_demographics_wealth
+q_demographics_wealth,radio,What is the approximate value of your Equity Portfolio?,"Less than ₹1 Lakh | ₹1L – ₹5L | ₹5L – ₹20L | More than ₹20L",,default: submit

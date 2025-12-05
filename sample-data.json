@@ -1,110 +1,138 @@
 [
   {
-    "q_id": "q_role",
-    "section": "Screener",
+    "q_id": "q_vintage",
     "type": "radio",
-    "question_text": "What is your role?",
-    "options": "Manager | Team Lead | Individual Contributor",
+    "question_text": "In which year did you open your FIRST investment account?",
+    "options": "2020 – Present (Post-COVID) | 2016 – 2019 (Jio Era) | 2009 – 2015 (Recovery Era) | Pre-2008 (Cycle Veteran)",
     "image_url": "",
-    "branch_logic": "default: q_tenure"
+    "branch_logic": "2020 – Present (Post-COVID): q_novice_source | 2016 – 2019 (Jio Era): q_novice_source | 2009 – 2015 (Recovery Era): q_veteran_action | Pre-2008 (Cycle Veteran): q_veteran_action"
   },
   {
-    "q_id": "q_tenure",
-    "section": "Screener",
+    "q_id": "q_novice_source",
     "type": "radio",
-    "question_text": "How long have you worked here?",
-    "options": "Less than 1 year | 1-3 years | 3+ years",
+    "question_text": "What is your primary source for discovering new stock ideas?",
+    "options": "Social Media (YouTube, Instagram, Telegram) | Friends & Family | Screening Apps (Tickertape/Screener)",
     "image_url": "",
-    "branch_logic": "default: q_checkpoint1"
+    "branch_logic": "default: q_novice_interface"
   },
   {
-    "q_id": "q_checkpoint1",
-    "section": "Screener",
+    "q_id": "q_novice_interface",
     "type": "radio",
-    "question_text": "Are you in a technical role?",
-    "options": "Yes | No",
+    "question_text": "Which interface do you use for >80% of your trades?",
+    "options": "Mobile Trading App (Zerodha, Groww, etc.) | Desktop Web Terminal",
     "image_url": "",
-    "branch_logic": "Yes: q_tech_path1 | No: q_non_tech_path1"
+    "branch_logic": "default: q_truth_serum"
   },
   {
-    "q_id": "q_tech_path1",
-    "section": "Tech_Path",
+    "q_id": "q_veteran_action",
     "type": "radio",
-    "question_text": "What is your primary tech stack?",
-    "options": "Frontend | Backend | Full-Stack",
+    "question_text": "Think back to the 2008 or 2020 crash. What was your primary action?",
+    "options": "I exited/reduced positions | I held or averaged down | I was inactive",
     "image_url": "",
-    "branch_logic": "default: q_tech_path2"
+    "branch_logic": "default: q_veteran_product"
   },
   {
-    "q_id": "q_tech_path2",
-    "section": "Tech_Path",
+    "q_id": "q_veteran_product",
+    "type": "radio",
+    "question_text": "Do you currently invest primarily via Direct Stocks or Mutual Funds?",
+    "options": "Mostly Direct Equity | Mostly Mutual Funds | 50-50 Mix",
+    "image_url": "",
+    "branch_logic": "default: q_truth_serum"
+  },
+  {
+    "q_id": "q_truth_serum",
+    "type": "radio",
+    "question_text": "Think back to June 4th, 2024 (Election Results Day). What did you ACTUALLY do?",
+    "options": "Sold positions to protect capital | Did nothing (Held) | Deployed more capital (Bought)",
+    "image_url": "",
+    "branch_logic": "default: q_randomizer"
+  },
+  {
+    "q_id": "q_randomizer",
+    "type": "randomizer",
+    "question_text": "[System Logic: Split Users]",
+    "options": "",
+    "image_url": "",
+    "branch_logic": "random: q_vignette_fear | q_vignette_greed"
+  },
+  {
+    "q_id": "q_vignette_fear",
     "type": "image",
-    "question_text": "How do you feel about this AI coding trend?",
-    "options": "Excited | Neutral | Concerned",
-    "image_url": "https://via.placeholder.com/600x300/667eea/ffffff?text=AI+Coding+Tools+Growth+2024",
-    "branch_logic": "default: q_checkpoint2"
+    "question_text": "SCENARIO A: Please review the market news below. <br> Headline: GLOBAL WAR RISK: SENSEX TANKS 2,000 PTS.",
+    "options": "",
+    "image_url": "https://imgur.com/fear_chart.png",
+    "branch_logic": "default: q_reaction_sip"
   },
   {
-    "q_id": "q_non_tech_path1",
-    "section": "NonTech_Path",
-    "type": "radio",
-    "question_text": "Which department are you in?",
-    "options": "Sales | Marketing | Operations",
-    "image_url": "",
-    "branch_logic": "default: q_non_tech_path2"
+    "q_id": "q_vignette_greed",
+    "type": "image",
+    "question_text": "SCENARIO B: Please review the market news below. <br> Headline: INDIA SHINING: NIFTY HITS NEW HIGH.",
+    "options": "",
+    "image_url": "https://imgur.com/greed_chart.png",
+    "branch_logic": "default: q_reaction_sip"
   },
   {
-    "q_id": "q_non_tech_path2",
-    "section": "NonTech_Path",
+    "q_id": "q_reaction_sip",
     "type": "radio",
-    "question_text": "Do you work directly with clients?",
-    "options": "Yes | No",
+    "question_text": "Imagine the headline above happens tomorrow. How would you manage your SIPs?",
+    "options": "Tactical Pause (Stop temporarily) | Status Quo (Continue) | Aggressive Top-Up (Increase amount)",
     "image_url": "",
-    "branch_logic": "default: q_checkpoint2"
+    "branch_logic": "default: q_reaction_cash"
   },
   {
-    "q_id": "q_checkpoint2",
-    "section": "MidPoint",
+    "q_id": "q_reaction_cash",
     "type": "radio",
-    "question_text": "What is your work arrangement?",
-    "options": "Fully Remote | Hybrid | Office",
+    "question_text": "You have ₹1,00,000 in liquid cash. How much do you deploy immediately?",
+    "options": "₹0 (Wait & Watch) | ₹25,000 (Cautious Entry) | ₹50,000+ (Aggressive Entry) | I would SELL existing stocks",
     "image_url": "",
-    "branch_logic": "Fully Remote: q_remote1 | Hybrid: q_hybrid1 | Office: q_office1"
+    "branch_logic": "default: q_latency"
   },
   {
-    "q_id": "q_remote1",
-    "section": "Remote_Path",
+    "q_id": "q_latency",
     "type": "radio",
-    "question_text": "What's your biggest remote work challenge?",
-    "options": "Communication | Isolation | Productivity",
+    "question_text": "In this scenario, how often would you check your portfolio value?",
+    "options": "Multiple times a day / On Notification | Once at market close | Once a week or less",
     "image_url": "",
-    "branch_logic": "default: q_final"
+    "branch_logic": "default: q_expectations"
   },
   {
-    "q_id": "q_hybrid1",
-    "section": "Hybrid_Path",
+    "q_id": "q_expectations",
     "type": "radio",
-    "question_text": "How many days per week do you work in the office?",
-    "options": "1-2 days | 3-4 days | 5 days",
+    "question_text": "Where do you expect the NIFTY to be 1 year after this headline?",
+    "options": "Lower than today | Approximately the same | Higher (New Highs)",
     "image_url": "",
-    "branch_logic": "default: q_final"
+    "branch_logic": "default: q_control_pnl"
   },
   {
-    "q_id": "q_office1",
-    "section": "Office_Path",
+    "q_id": "q_control_pnl",
     "type": "radio",
-    "question_text": "Do you prefer your current office setup?",
-    "options": "Yes | No | Unsure",
+    "question_text": "What is the current P&L status of your portfolio?",
+    "options": "Significant Profit (>15%) | Marginal Profit / Break-even | Loss (Red)",
     "image_url": "",
-    "branch_logic": "default: q_final"
+    "branch_logic": "default: q_control_attitude"
   },
   {
-    "q_id": "q_final",
-    "section": "Closing",
+    "q_id": "q_control_attitude",
     "type": "radio",
-    "question_text": "Would you recommend this company to a friend?",
-    "options": "Definitely | Maybe | No",
+    "question_text": "Which statement describes your view on \"Market Volatility\"?",
+    "options": "A threat to savings | Noise to be ignored | An opportunity to trade",
     "image_url": "",
-    "branch_logic": "submit"
+    "branch_logic": "default: q_demographics_age"
+  },
+  {
+    "q_id": "q_demographics_age",
+    "type": "radio",
+    "question_text": "What is your Age Group?",
+    "options": "18 – 25 | 26 – 35 | 36 – 50 | 50+",
+    "image_url": "",
+    "branch_logic": "default: q_demographics_wealth"
+  },
+  {
+    "q_id": "q_demographics_wealth",
+    "type": "radio",
+    "question_text": "What is the approximate value of your Equity Portfolio?",
+    "options": "Less than ₹1 Lakh | ₹1L – ₹5L | ₹5L – ₹20L | More than ₹20L",
+    "image_url": "",
+    "branch_logic": "default: submit"
   }
 ]
