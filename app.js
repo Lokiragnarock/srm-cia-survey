@@ -94,6 +94,14 @@ function showQuestion(questionId) {
         return;
     }
 
+    // HANDLE HIDDEN/SYSTEM NODES (Auto-advance)
+    // If it's a randomizer, pick the next path immediately and don't show UI
+    if (question.type === 'randomizer') {
+        const nextId = getNextQuestion(question, '');
+        showQuestion(nextId);
+        return;
+    }
+
     // Update state
     state.currentQuestionId = questionId;
     state.currentQuestionIndex++;
