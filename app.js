@@ -68,7 +68,8 @@ async function loadSurveyConfig() {
         // Load from Google Apps Script
         const response = await fetch(CONFIG.APPS_SCRIPT_URL + '?action=getConfig');
         const data = await response.json();
-        state.surveyConfig = parseSheetData(data);
+        // API now returns formatted JSON objects, so we use it directly
+        state.surveyConfig = data;
     }
 }
 
