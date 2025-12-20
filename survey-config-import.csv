@@ -6,11 +6,11 @@ q_veteran_action,radio,"Think back to the 2008 or 2020 crash. What was your prim
 q_veteran_product,radio,Do you currently invest primarily via Direct Stocks or Mutual Funds?,"Mostly Direct Equity | Mostly Mutual Funds | 50-50 Mix",,default: q_truth_serum
 q_truth_serum,radio,"Think back to June 4th, 2024 (Election Results Day). What did you ACTUALLY do?","Sold positions to protect capital | Did nothing (Held) | Deployed more capital (Bought)",,default: q_randomizer
 q_randomizer,randomizer,[System Logic: Split Users],,,random: q_vignette_fear | q_vignette_greed
-q_vignette_fear,image,"SCENARIO A: Please review the market news below. <br> Headline: GLOBAL WAR RISK: SENSEX TANKS 2,000 PTS.",,https://imgur.com/fear_chart.png,default: q_reaction_sip
-q_vignette_greed,image,"SCENARIO B: Please review the market news below. <br> Headline: INDIA SHINING: NIFTY HITS NEW HIGH.",,https://imgur.com/greed_chart.png,default: q_reaction_sip
+q_vignette_fear,image,"SCENARIO A: Please review the market news below. <br> Headline: GLOBAL WAR RISK: SENSEX TANKS 2,000 PTS.",,https://srm-cia-survey.vercel.app/scenario_a.png,default: q_reaction_sip
+q_vignette_greed,image,"SCENARIO B: Please review the market news below. <br> Headline: INDIA SHINING: NIFTY HITS NEW HIGH.",,https://srm-cia-survey.vercel.app/scenario_b.png,default: q_reaction_sip
 q_reaction_sip,radio,Imagine the headline above happens tomorrow. How would you manage your SIPs?,"Tactical Pause (Stop temporarily) | Status Quo (Continue) | Aggressive Top-Up (Increase amount)",,default: q_reaction_cash
-q_reaction_cash,radio,You have ₹1,00,000 in liquid cash. How much do you deploy immediately?,"₹0 (Wait & Watch) | ₹25,000 (Cautious Entry) | ₹50,000+ (Aggressive Entry) | I would SELL existing stocks",,default: q_latency
-q_latency,radio,In this scenario, how often would you check your portfolio value?,"Multiple times a day / On Notification | Once at market close | Once a week or less",,default: q_expectations
+q_reaction_cash,radio,"You have ₹1,00,000 in liquid cash. How much do you deploy immediately?","₹0 (Wait & Watch) | ₹25,000 (Cautious Entry) | ₹50,000+ (Aggressive Entry) | I would SELL existing stocks",,default: q_latency
+q_latency,radio,"In this scenario, how often would you check your portfolio value?","Multiple times a day / On Notification | Once at market close | Once a week or less",,default: q_expectations
 q_expectations,radio,Where do you expect the NIFTY to be 1 year after this headline?,"Lower than today | Approximately the same | Higher (New Highs)",,default: q_control_pnl
 q_control_pnl,radio,What is the current P&L status of your portfolio?,"Significant Profit (>15%) | Marginal Profit / Break-even | Loss (Red)",,default: q_control_attitude
 q_control_attitude,radio,"Which statement describes your view on ""Market Volatility""?","A threat to savings | Noise to be ignored | An opportunity to trade",,default: q_demographics_age

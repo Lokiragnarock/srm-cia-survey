@@ -17,6 +17,8 @@ function doGet(e) {
 
         if (action === 'getConfig') {
             return getSurveyConfig();
+        } else if (action === 'getResponses') {
+            return getSurveyResponses();
         }
 
         return createJsonResponse({ error: 'Invalid action' }, 400);
@@ -24,6 +26,46 @@ function doGet(e) {
         Logger.log('GET Error: ' + error);
         return createJsonResponse({ error: error.toString() }, 500);
     }
+}
+
+// ==================== GET SURVEY RESPONSES ====================
+/**
+ * Reads the responses tab and returns as JSON array
+ * Useful for external analysis agents
+ */
+function getSurveyResponses() {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet();
+    const responsesTab = sheet.getSheetByName(RESPONSES_TAB);
+
+    if (!responsesTab) {
+        return createJsonResponse([]);
+    }
+
+    const data = responsesTab.getDataRange().getValues();
+
+    if (data.length <= 1) {
+        return createJsonResponse([]);
+    }
+
+    // First row is headers
+    const headers = data[0];
+    const rows = data.slice(1);
+
+    // Convert to array of objects
+    const responses = rows.map(row => {
+        const obj = {};
+        headers.forEach((header, index) => {
+            // Format dates nicely
+            if (row[index] instanceof Date) {
+                obj[header] = row[index].toISOString();
+            } else {
+                obj[header] = row[index].toString();
+            }
+        });
+        return obj;
+    });
+
+    return createJsonResponse(responses);
 }
 
 // ==================== POST REQUEST HANDLER ====================

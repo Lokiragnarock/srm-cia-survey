@@ -118,8 +118,20 @@ async function loadSurveyConfig() {
         const response = await fetch(CONFIG.APPS_SCRIPT_URL + '?action=getConfig');
         const data = await response.json();
         // API now returns formatted JSON objects, so we use it directly
-        state.surveyConfig = data;
+        state.surveyConfig = data.map(normalizeQuestionData);
     }
+}
+
+function normalizeQuestionData(q) {
+    // Map various possible column names to our internal standard
+    return {
+        q_id: q['q_id'] || q['ID'] || '',
+        type: q['type'] || 'radio', // Default to radio if missing
+        question_text: q['question_text'] || q['question_text (Statement)'] || q['Question'] || '',
+        options: q['options'] || q['Options'] || '',
+        image_url: q['image_url'] || q['Image'] || '',
+        branch_logic: q['branch_logic'] || q['Logic'] || ''
+    };
 }
 
 function parseSheetData(rawData) {
@@ -130,7 +142,7 @@ function parseSheetData(rawData) {
         headers.forEach((header, index) => {
             obj[header] = row[index] || '';
         });
-        return obj;
+        return normalizeQuestionData(obj);
     });
 }
 
@@ -285,7 +297,13 @@ function goToPreviousQuestion() {
 function getNextQuestion(currentQuestion, userAnswer) {
     const logic = currentQuestion.branch_logic;
 
+    // CASE 0: No Logic (Linear Fallback)
+    // If no logic is defined, just go to the next question in the array
     if (!logic || logic === 'null' || !logic.trim()) {
+        const currentIndex = state.surveyConfig.findIndex(q => q.q_id === currentQuestion.q_id);
+        if (currentIndex < state.surveyConfig.length - 1) {
+            return state.surveyConfig[currentIndex + 1].q_id;
+        }
         return 'submit';
     }
 
