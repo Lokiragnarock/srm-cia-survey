@@ -35,7 +35,7 @@ const elements = {
 };
 
 // ==================== AUTO-SAVE SYSTEM ====================
-const STORAGE_KEY = 'srm_cia_survey_progress';
+const STORAGE_KEY = 'srm_cia_survey_progress_v2'; // Changed to v2 to force reset for all users
 
 function saveProgress() {
     const progress = {
@@ -114,8 +114,8 @@ async function loadSurveyConfig() {
         const response = await fetch(CONFIG.SAMPLE_DATA_FILE);
         state.surveyConfig = await response.json();
     } else {
-        // Load from Google Apps Script
-        const response = await fetch(CONFIG.APPS_SCRIPT_URL + '?action=getConfig');
+        // Load from Google Apps Script with cache busting
+        const response = await fetch(CONFIG.APPS_SCRIPT_URL + '?action=getConfig&t=' + new Date().getTime());
         const data = await response.json();
         // API now returns formatted JSON objects, so we use it directly
         state.surveyConfig = data.map(normalizeQuestionData);
