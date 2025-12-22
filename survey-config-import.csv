@@ -1,4 +1,5 @@
 q_id,type,question_text,options,image_url,branch_logic
+q_intro,intro,"<h1>Welcome to the Indian Investor Psychology Survey</h1><p>We are conducting this survey to understand how different market conditions influence investment decisions for various demographics.</p><p>Your responses are anonymous and will help in building better financial products.</p><p>This survey will take approximately 2 minutes.</p>",,,default: q_vintage
 q_vintage,radio,In which year did you open your FIRST investment account?,"2020 – Present (Post-COVID) | 2016 – 2019 (Jio Era) | 2009 – 2015 (Recovery Era) | Pre-2008 (Cycle Veteran)",,"2020 – Present (Post-COVID): q_novice_source | 2016 – 2019 (Jio Era): q_novice_source | 2009 – 2015 (Recovery Era): q_veteran_action | Pre-2008 (Cycle Veteran): q_veteran_action"
 q_novice_source,radio,What is your primary source for discovering new stock ideas?,"Social Media (YouTube, Instagram, Telegram) | Friends & Family | Screening Apps (Tickertape/Screener)",,default: q_novice_interface
 q_novice_interface,radio,Which interface do you use for >80% of your trades?,"Mobile Trading App (Zerodha, Groww, etc.) | Desktop Web Terminal",,default: q_truth_serum

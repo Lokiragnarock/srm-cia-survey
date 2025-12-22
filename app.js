@@ -250,7 +250,7 @@ function goToNextQuestion() {
     const currentQuestion = state.surveyConfig.find(q => q.q_id === state.currentQuestionId);
     const userAnswer = state.responses[state.currentQuestionId];
 
-    if (!userAnswer && currentQuestion.type !== 'image') {
+    if (!userAnswer && currentQuestion.type !== 'image' && currentQuestion.type !== 'intro') {
         alert('Please select an option');
         return;
     }
@@ -407,7 +407,14 @@ function updateNavigationButtons() {
     const currentQuestion = state.surveyConfig.find(q => q.q_id === state.currentQuestionId);
     const userAnswer = state.responses[state.currentQuestionId];
 
-    if (userAnswer && currentQuestion) {
+    if (currentQuestion && currentQuestion.type === 'intro') {
+        elements.nextBtn.innerHTML = `
+            Start Survey
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        `;
+    } else if (userAnswer && currentQuestion) {
         const nextId = getNextQuestion(currentQuestion, userAnswer);
         if (nextId === 'submit') {
             elements.nextBtn.innerHTML = `
@@ -424,10 +431,18 @@ function updateNavigationButtons() {
                 </svg>
             `;
         }
+    } else {
+        // Default text
+        elements.nextBtn.innerHTML = `
+            Next
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        `;
     }
 
-    // Disable next button initially, unless it's an informational image slide
-    if (currentQuestion && currentQuestion.type === 'image') {
+    // Disable next button initially, unless it's an informational image slide or intro
+    if (currentQuestion && (currentQuestion.type === 'image' || currentQuestion.type === 'intro')) {
         elements.nextBtn.disabled = false;
     } else {
         elements.nextBtn.disabled = !state.responses[state.currentQuestionId];
